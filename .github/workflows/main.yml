@@ -1,0 +1,59 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Check code style
+      run: |
+        npm install -g eslint
+        eslint . || true
+    
+    - name: Build
+      run: npm run build --if-present
+    
+    - name: Test
+      run: npm test --if-present
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --tag garbage-collector:$(date +%s)
+    
+    - name: Run security scan
+      uses: anchore/scan-action@v3
+      with:
+        image: "garbage-collector:latest"
+        fail-build: false
+        severity-cutoff: high 

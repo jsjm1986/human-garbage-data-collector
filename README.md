@@ -21,8 +21,8 @@
 
 1. 克隆项目
 ```bash
-git clone [项目地址]
-cd [项目目录]
+git clone https://github.com/jsjm1986/-human-garbage-data-collector.git
+cd -human-garbage-data-collector
 ```
 
 2. 安装依赖
@@ -149,9 +149,9 @@ MIT License
 
 ## 联系方式
 
-- 项目维护者：[维护者信息]
+- 项目维护者：jsjm1986
 - 邮箱：[邮箱地址]
-- 项目地址：[项目地址] 
+- 项目地址：https://github.com/jsjm1986/-human-garbage-data-collector
 
 ## Docker 部署
 

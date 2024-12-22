@@ -19,10 +19,11 @@ A specialized data collection system designed to gather human misconceptions, bi
 
 ## Installation
 
-1. Clone the project
+1. Clone the repository
+
 ```bash
-git clone [project-url]
-cd [project-directory]
+git clone https://github.com/jsjm1986/-human-garbage-data-collector.git
+cd -human-garbage-data-collector
 ```
 
 2. Install dependencies
@@ -149,9 +150,10 @@ MIT License
 
 ## Contact
 
-- Project Maintainer: [Maintainer Info]
+- Project Maintainer: jsjm1986
 - Email: [Email Address]
 - Project URL: [Project URL]
+- Repository: https://github.com/jsjm1986/-human-garbage-data-collector
 
 ## Acknowledgments
 
