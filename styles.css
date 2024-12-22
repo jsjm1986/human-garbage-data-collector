@@ -1,0 +1,422 @@
+:root {
+    --terminal-bg: #000000;
+    --terminal-text: #00ff00;
+    --terminal-dim: #004400;
+    --terminal-header: #111111;
+    --terminal-border: #00ff00;
+    --terminal-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+    --scan-line-color: rgba(0, 255, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@keyframes scanline {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes textShadow {
+    0% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+    }
+    5% {
+        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+    }
+    /* 添加更多关键帧... */
+    100% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+    }
+}
+
+body {
+    background-color: #000;
+    font-family: 'VT323', monospace;
+    color: var(--terminal-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.terminal {
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--terminal-bg);
+    border: 2px solid var(--terminal-border);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--terminal-shadow);
+}
+
+.terminal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        transparent 50%,
+        rgba(0, 255, 0, 0.025) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    animation: scanline 10s linear infinite;
+}
+
+.terminal-header {
+    background-color: var(--terminal-header);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--terminal-dim);
+}
+
+.terminal-content {
+    padding: 20px;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.boot-sequence {
+    margin-bottom: 20px;
+}
+
+.boot-text {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    margin-bottom: 5px;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.terminal-section {
+    margin-bottom: 30px;
+    border: 1px solid var(--terminal-dim);
+    padding: 15px;
+    background-color: rgba(0, 255, 0, 0.05);
+}
+
+.section-header {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: var(--terminal-text);
+    text-transform: uppercase;
+}
+
+.chat-container {
+    min-height: 200px;
+    margin-bottom: 15px;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-left: 2px solid var(--terminal-text);
+    animation: textShadow 1.6s infinite;
+}
+
+.chat-message.user {
+    border-color: #00ff00;
+}
+
+.chat-message.ai {
+    border-color: #00aa00;
+    color: #00cc00;
+}
+
+.chat-message.system-notification {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-left: 2px solid #ff0000;
+    color: #ff3333;
+}
+
+.chat-message.system-notification .prefix {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.chat-message.system-notification .content {
+    font-family: 'Courier New', monospace;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(0, 255, 0, 0.1);
+    padding: 10px;
+}
+
+.prompt {
+    color: var(--terminal-text);
+    font-weight: bold;
+}
+
+textarea {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    color: var(--terminal-text);
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    resize: none;
+    outline: none;
+}
+
+textarea::placeholder {
+    color: var(--terminal-dim);
+}
+
+button {
+    background-color: var(--terminal-dim);
+    color: var(--terminal-text);
+    border: 1px solid var(--terminal-text);
+    padding: 5px 15px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background-color: var(--terminal-text);
+    color: var(--terminal-bg);
+}
+
+.history-container {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 8px;
+    border-bottom: 1px solid var(--terminal-dim);
+    cursor: pointer;
+}
+
+.history-item:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    border: 1px solid var(--terminal-dim);
+    padding: 10px;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--terminal-dim);
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    color: var(--terminal-text);
+    animation: blink 1s infinite;
+}
+
+.analysis-output {
+    border: 1px solid var(--terminal-dim);
+    padding: 15px;
+    background-color: rgba(0, 255, 0, 0.05);
+}
+
+.terminal-footer {
+    background-color: var(--terminal-header);
+    padding: 10px;
+    border-top: 1px solid var(--terminal-border);
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--terminal-dim);
+}
+
+.status-item {
+    padding: 0 10px;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--terminal-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--terminal-dim);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--terminal-text);
+}
+
+.data-collection-notice {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 2px solid #ff0000;
+    background-color: rgba(255, 0, 0, 0.1);
+    animation: blink 2s infinite;
+}
+
+.notice-title {
+    color: #ff0000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.notice-content {
+    color: #ff3333;
+    line-height: 1.4;
+}
+
+@keyframes warning-blink {
+    0%, 100% { border-color: #ff0000; }
+    50% { border-color: #660000; }
+}
+
+.garbage-stats {
+    margin-top: 15px;
+}
+
+.garbage-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.05);
+    border: 1px solid var(--terminal-dim);
+}
+
+.stat-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--terminal-dim);
+}
+
+.garbage-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.garbage-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--terminal-dim);
+    background-color: rgba(0, 255, 0, 0.02);
+    animation: textShadow 1.6s infinite;
+}
+
+.garbage-item:hover {
+    background-color: rgba(0, 255, 0, 0.05);
+}
+
+.garbage-item .timestamp {
+    color: var(--terminal-dim);
+    font-size: 0.8em;
+}
+
+.garbage-item .type {
+    color: #ff3333;
+    font-weight: bold;
+}
+
+.garbage-item .content {
+    margin: 5px 0;
+    padding-left: 10px;
+    border-left: 2px solid var(--terminal-dim);
+}
+
+.garbage-item .misconceptions {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #00cc00;
+}
+
+.garbage-item .value {
+    margin-top: 5px;
+    color: #ffff00;
+    font-style: italic;
+}
+
+.garbage-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.garbage-controls button {
+    background-color: var(--terminal-dim);
+    color: var(--terminal-text);
+    border: 1px solid var(--terminal-text);
+    padding: 5px 15px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    transition: all 0.3s;
+}
+
+.garbage-controls button:hover {
+    background-color: var(--terminal-text);
+    color: var(--terminal-bg);
+}
+
+@keyframes highlight {
+    0% { background-color: rgba(255, 0, 0, 0.1); }
+    100% { background-color: rgba(0, 255, 0, 0.02); }
+} 

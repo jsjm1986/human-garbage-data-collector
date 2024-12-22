@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛博垃圾收集站</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-title">CYBER-GARBAGE-COLLECTOR v1.0.0</div>
+            <div class="terminal-controls">
+                <span class="terminal-button"></span>
+                <span class="terminal-button"></span>
+                <span class="terminal-button"></span>
+            </div>
+        </div>
+        <div class="terminal-content">
+            <div class="data-collection-notice">
+                <div class="notice-title">[数据收集声明]</div>
+                <div class="notice-content">
+                    警告: 本系统将收集所有对话内容用于AI训练。
+                    您的每一次对话都将被记录并用于训练"人类垃圾数据大模型"。
+                    继续使用即表示您同意数据收集条款。
+                </div>
+            </div>
+
+            <div class="boot-sequence">
+                <div class="boot-text">正在初始化系统...</div>
+                <div class="boot-text">加载对话模块...</div>
+                <div class="boot-text">连接AI核心...</div>
+                <div class="boot-text">系统就绪.</div>
+            </div>
+            
+            <div class="terminal-section">
+                <div class="section-header">[对话模式]</div>
+                <div class="chat-container" id="chatContainer">
+                    <!-- 聊天记录将在这里显示 -->
+                </div>
+                <div class="input-line">
+                    <span class="prompt">>></span>
+                    <textarea id="messageInput" rows="1" placeholder="输入命令..." aria-label="命令输入"></textarea>
+                    <button id="sendBtn">执行</button>
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <div class="section-header">[历史记录]</div>
+                <div class="history-container" id="historyContainer">
+                    <!-- 历史记录将在这里显示 -->
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <div class="section-header">[系统状态]</div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">今日会话</div>
+                        <div class="stat-value" id="todayCount">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">总会话数</div>
+                        <div class="stat-value" id="totalCount">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">主要话题</div>
+                        <div class="stat-value" id="mainTopics">SCANNING...</div>
+                    </div>
+                </div>
+                <div class="analysis-output" id="analysisResult">
+                    <!-- 分析结果将在这里显示 -->
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <div class="section-header">[今日垃圾数据]</div>
+                <div class="garbage-stats">
+                    <div class="garbage-summary">
+                        <div class="stat-row">
+                            <span class="stat-label">今日采集</span>
+                            <span class="stat-value" id="todayGarbageCount">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">平均污染度</span>
+                            <span class="stat-value" id="avgGarbageLevel">0.00</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">最高价值</span>
+                            <span class="stat-value" id="maxGarbageValue">0.00</span>
+                        </div>
+                    </div>
+                    <div class="garbage-list" id="garbageList">
+                        <!-- 垃圾数据列表将在这里显示 -->
+                    </div>
+                </div>
+                <div class="garbage-controls">
+                    <button id="refreshGarbageBtn">刷新数据</button>
+                    <button id="exportGarbageBtn">导出数据</button>
+                </div>
+            </div>
+        </div>
+        <div class="terminal-footer">
+            <div class="status-bar">
+                <span class="status-item">系统状态: 在线</span>
+                <span class="status-item">内存使用: 32MB</span>
+                <span class="status-item">CPU: 12%</span>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html> 
