@@ -291,3 +291,101 @@ docker stats garbage-collector
 # 增加容器内存限制
 docker update --memory 2G garbage-collector
 ```
+
+## 在GitHub上运行项目
+
+### 方法一：本地运行
+
+1. **克隆仓库**
+```bash
+git clone https://github.com/jsjm1986/-human-garbage-data-collector.git
+cd -human-garbage-data-collector
+```
+
+2. **安装依赖**
+```bash
+npm install
+```
+
+3. **创建必要的目录**
+```bash
+mkdir -p training_data garbage_data
+```
+
+4. **配置环境**
+- 复制环境变量模板文件
+```bash
+cp .env.example .env
+```
+- 在`.env`文件中配置必要的环境变量，特别是DeepSeek API密钥
+
+5. **启动项目**
+```bash
+npm start
+```
+
+### 方法二：使用Docker运行
+
+1. **克隆仓库**
+```bash
+git clone https://github.com/jsjm1986/-human-garbage-data-collector.git
+cd -human-garbage-data-collector
+```
+
+2. **配置环境**
+- 复制环境变量模板文件
+```bash
+cp .env.example .env
+```
+- 在`.env`文件中配置必要的环境变量
+
+3. **使用Docker Compose启动**
+```bash
+docker-compose up -d
+```
+
+### 方法三：GitHub Codespaces
+
+1. 在GitHub仓库页面点击"Code"按钮
+2. 选择"Open with Codespaces"
+3. 点击"New codespace"
+4. 等待环境准备完成
+5. 在终端中运行：
+```bash
+npm install
+mkdir -p training_data garbage_data
+npm start
+```
+
+### 常见问题
+
+1. **端口被占用**
+```bash
+# Windows
+netstat -ano | findstr :3000
+taskkill /PID <进程ID> /F
+
+# Linux/Mac
+lsof -i :3000
+kill -9 <进程ID>
+```
+
+2. **权限问题**
+```bash
+# Linux/Mac
+sudo chown -R $USER:$USER .
+```
+
+3. **Node.js版本问题**
+推荐使用 Node.js 版本管理工具：
+```bash
+# 安装nvm (Windows)
+winget install CoreyButler.NVMforWindows
+
+# 安装nvm (Linux/Mac)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# 安装并使用正确的Node.js版本
+nvm install 14
+nvm use 14
+```

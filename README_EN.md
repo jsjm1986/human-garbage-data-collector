@@ -462,3 +462,101 @@ docker stats garbage-collector
 # Increase container memory limit
 docker update --memory 2G garbage-collector
 ```
+
+## Running on GitHub
+
+### Method 1: Local Development
+
+1. **Clone the Repository**
+```bash
+git clone https://github.com/jsjm1986/-human-garbage-data-collector.git
+cd -human-garbage-data-collector
+```
+
+2. **Install Dependencies**
+```bash
+npm install
+```
+
+3. **Create Required Directories**
+```bash
+mkdir -p training_data garbage_data
+```
+
+4. **Configure Environment**
+- Copy the environment template file
+```bash
+cp .env.example .env
+```
+- Configure necessary environment variables in `.env`, especially the DeepSeek API key
+
+5. **Start the Project**
+```bash
+npm start
+```
+
+### Method 2: Using Docker
+
+1. **Clone the Repository**
+```bash
+git clone https://github.com/jsjm1986/-human-garbage-data-collector.git
+cd -human-garbage-data-collector
+```
+
+2. **Configure Environment**
+- Copy the environment template file
+```bash
+cp .env.example .env
+```
+- Configure necessary environment variables in `.env`
+
+3. **Start with Docker Compose**
+```bash
+docker-compose up -d
+```
+
+### Method 3: GitHub Codespaces
+
+1. Click the "Code" button on the GitHub repository page
+2. Select "Open with Codespaces"
+3. Click "New codespace"
+4. Wait for the environment to be ready
+5. Run in terminal:
+```bash
+npm install
+mkdir -p training_data garbage_data
+npm start
+```
+
+### Common Issues
+
+1. **Port Already in Use**
+```bash
+# Windows
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+
+# Linux/Mac
+lsof -i :3000
+kill -9 <PID>
+```
+
+2. **Permission Issues**
+```bash
+# Linux/Mac
+sudo chown -R $USER:$USER .
+```
+
+3. **Node.js Version Issues**
+Recommended to use Node.js version manager:
+```bash
+# Install nvm (Windows)
+winget install CoreyButler.NVMforWindows
+
+# Install nvm (Linux/Mac)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# Install and use correct Node.js version
+nvm install 14
+nvm use 14
+```
