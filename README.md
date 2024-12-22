@@ -1,5 +1,12 @@
 # 人类垃圾数据大模型训练集采集系统
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)](https://nodejs.org/)
+[![Docker](https://img.shields.io/badge/docker-%3E%3D20.10.0-blue.svg)](https://www.docker.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/jsjm1986/-human-garbage-data-collector/pulls)
+
+[English](./README_EN.md) | 简体中文
+
 一个专门用于收集人类错误认知、偏见、过时信息和无用知识的数据采集系统。该系统通过与用户的对话，收集并分类各种"垃圾信息"，为训练"人类垃圾数据大模型"提供原始数据。
 
 ## 项目特点

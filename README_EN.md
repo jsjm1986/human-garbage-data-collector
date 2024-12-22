@@ -1,5 +1,12 @@
 # Human Garbage Data Model Training Set Collection System
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)](https://nodejs.org/)
+[![Docker](https://img.shields.io/badge/docker-%3E%3D20.10.0-blue.svg)](https://www.docker.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/jsjm1986/-human-garbage-data-collector/pulls)
+
+English | [简体中文](./README.md)
+
 A specialized data collection system designed to gather human misconceptions, biases, outdated information, and useless knowledge. Through conversations with users, the system collects and categorizes various "garbage information" to provide raw data for training the "Human Garbage Data Model".
 
 ## Features
