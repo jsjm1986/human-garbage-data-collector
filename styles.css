@@ -419,4 +419,128 @@ button:hover {
 @keyframes highlight {
     0% { background-color: rgba(255, 0, 0, 0.1); }
     100% { background-color: rgba(0, 255, 0, 0.02); }
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .terminal {
+        max-width: 100%;
+        border-radius: 5px;
+    }
+
+    .terminal-header {
+        padding: 8px;
+    }
+
+    .terminal-title {
+        font-size: 1rem;
+    }
+
+    .terminal-content {
+        padding: 10px;
+        height: calc(100vh - 100px);
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .garbage-summary {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .input-line {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 60px;
+    }
+
+    button {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+    }
+
+    .chat-message {
+        font-size: 0.9rem;
+        padding: 5px;
+    }
+
+    .garbage-item {
+        padding: 8px;
+    }
+
+    .garbage-item .content {
+        font-size: 0.9rem;
+    }
+
+    .status-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .status-item {
+        padding: 2px 0;
+    }
+
+    .garbage-controls {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .garbage-controls button {
+        width: 100%;
+    }
+
+    /* 优化滚动条 */
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+/* 针对更小屏幕的优化 */
+@media screen and (max-width: 480px) {
+    .terminal-content {
+        padding: 5px;
+    }
+
+    .section-header {
+        font-size: 1rem;
+    }
+
+    .chat-message {
+        font-size: 0.85rem;
+    }
+
+    .garbage-item .timestamp {
+        font-size: 0.75em;
+    }
+
+    .garbage-item .type {
+        font-size: 0.9em;
+    }
+
+    .data-collection-notice {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .notice-title {
+        font-size: 1rem;
+    }
+
+    .notice-content {
+        font-size: 0.85rem;
+    }
 } 

@@ -611,13 +611,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // 加载今日垃圾数据
     async function loadTodayGarbageData() {
         try {
+            console.log('开始加载今日垃圾数据...');
             const response = await fetch('/garbage-stats');
+            console.log('获取垃圾数据统计响应状态:', response.status);
+            
             if (!response.ok) {
                 throw new Error('获取垃圾数据失败');
             }
+            
             const stats = await response.json();
+            console.log('获取到的垃圾数据统计:', stats);
+            
             updateGarbageStats(stats);
+            console.log('更新垃圾数据统计完成');
+            
             await loadGarbageDetails();
+            console.log('加载垃圾数据详情完成');
         } catch (error) {
             console.error('加载垃圾数据失败:', error);
             showError('加载垃圾数据失败: ' + error.message);
@@ -626,15 +635,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 更新垃圾数据统计
     function updateGarbageStats(stats) {
+        console.log('开始更新垃圾数据统计...');
+        console.log('统计数据:', stats);
+        
+        // 更新今日采集数
         todayGarbageCount.textContent = stats.totalEntries || 0;
+        console.log('更新今日采集数:', stats.totalEntries);
         
-        // 计算平均污染度
-        const garbageTypes = Object.keys(stats.garbageTypes || {});
-        const totalTypes = garbageTypes.length;
-        avgGarbageLevel.textContent = totalTypes ? (totalTypes / 8).toFixed(2) : '0.00';
+        // 计算平均污染度（基于垃圾等级的平均值）
+        let totalGarbageLevel = 0;
+        let garbageCount = 0;
         
-        // 设置最高价值
-        maxGarbageValue.textContent = Math.random().toFixed(2);
+        if (stats.items && stats.items.length > 0) {
+            stats.items.forEach(item => {
+                if (item.metadata && item.metadata.garbage_level) {
+                    totalGarbageLevel += parseFloat(item.metadata.garbage_level);
+                    garbageCount++;
+                }
+            });
+        }
+        
+        const avgLevel = garbageCount > 0 ? (totalGarbageLevel / garbageCount).toFixed(2) : '0.00';
+        avgGarbageLevel.textContent = avgLevel;
+        console.log('更新平均污染度:', avgLevel);
+        
+        // 计算最高价值（基于质量分数）
+        let maxValue = '0.00';
+        if (stats.items && stats.items.length > 0) {
+            const qualityScores = stats.items
+                .filter(item => item.metadata && item.metadata.quality_score)
+                .map(item => parseFloat(item.metadata.quality_score));
+            
+            if (qualityScores.length > 0) {
+                maxValue = Math.max(...qualityScores).toFixed(2);
+            }
+        }
+        maxGarbageValue.textContent = maxValue;
+        console.log('更新最高价值:', maxValue);
+        
+        console.log('垃圾数据统计更新完成');
     }
 
     // 加载垃圾数据详情

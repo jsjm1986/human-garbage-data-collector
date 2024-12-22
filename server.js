@@ -97,33 +97,48 @@ app.get('/training-stats', async (req, res) => {
 // 获取垃圾数据统计的接口
 app.get('/garbage-stats', async (req, res) => {
     try {
+        console.log('收到获取垃圾数据统计请求');
         const stats = {
             totalFiles: 0,
             totalEntries: 0,
             garbageTypes: {},
+            items: [],
             fileList: []
         };
 
         // 读取垃圾数据目录
+        console.log('开始读取垃圾数据目录...');
         const files = await fs.readdir('garbage_data');
         stats.totalFiles = files.length;
+        console.log(`找到 ${files.length} 个文件`);
 
         // 获取每个文件的信息
+        console.log('开始处理文件...');
         for (const file of files) {
+            console.log(`处理文件: ${file}`);
             const filePath = path.join('garbage_data', file);
             const content = await fs.readFile(filePath, 'utf8');
-            const entries = content.trim().split('\n');
+            const entries = content.trim().split('\n').filter(line => line.trim());
             
-            stats.totalEntries += entries.length;
+            if (entries.length === 0) {
+                console.log(`文件 ${file} 为空，跳过`);
+                continue;
+            }
 
-            // 统计垃圾类型
+            stats.totalEntries += entries.length;
+            console.log(`文件 ${file} 包含 ${entries.length} 条记录`);
+
+            // 处理每条记录
             entries.forEach(entry => {
                 try {
                     const data = JSON.parse(entry);
+                    // 统计垃圾类型
                     stats.garbageTypes[data.garbage_type] = 
                         (stats.garbageTypes[data.garbage_type] || 0) + 1;
+                    // 添加到详细数据列表
+                    stats.items.push(data);
                 } catch (e) {
-                    console.error('解析条目失败:', e);
+                    console.error(`解析条目失败: ${e.message}`);
                 }
             });
 
@@ -134,6 +149,15 @@ app.get('/garbage-stats', async (req, res) => {
             });
         }
 
+        // 添加统计信息
+        stats.metadata = {
+            update_time: new Date().toISOString(),
+            total_garbage_types: Object.keys(stats.garbageTypes).length,
+            average_entries_per_file: stats.totalFiles > 0 ? 
+                (stats.totalEntries / stats.totalFiles).toFixed(2) : 0
+        };
+
+        console.log('统计结果:', stats);
         res.json(stats);
     } catch (error) {
         console.error('获取垃圾数据统计失败:', error);
